@@ -22,6 +22,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Al cargar la aplicación, intenta recuperar el usuario de localStorage.
   useEffect(() => {
+    if (typeof window === "undefined") {
+      setIsLoading(false)
+      return
+    }
+
     const currentUser = authService.getCurrentUser()
     if (currentUser) {
       setUser(currentUser)
