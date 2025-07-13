@@ -23,7 +23,11 @@ import {
 } from "recharts"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
-export default function ParticipationPage() {
+interface ParticipationPageProps {
+  isPublic?: boolean
+}
+
+export function ParticipationPage({ isPublic = false }: ParticipationPageProps) {
   const [overallParticipationChartData, setOverallParticipationChartData] = useState<OverallParticipationData[]>([])
   const [departmentParticipationChartData, setDepartmentParticipationChartData] = useState<
     DepartmentParticipationChartData[]
@@ -219,3 +223,5 @@ export default function ParticipationPage() {
     </div>
   )
 }
+
+export default ParticipationPage

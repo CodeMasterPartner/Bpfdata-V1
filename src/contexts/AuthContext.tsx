@@ -22,35 +22,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Al cargar la aplicación, intenta recuperar el usuario de localStorage.
   useEffect(() => {
+    console.log("[AuthContext] Initializing authentication...")
+    
     if (typeof window === "undefined") {
+      console.log("[AuthContext] Server-side rendering, skipping auth initialization")
       setIsLoading(false)
       return
     }
 
+    console.log("[AuthContext] Checking for existing user session...")
     const currentUser = authService.getCurrentUser()
     if (currentUser) {
+      console.log("[AuthContext] Found existing user:", { username: currentUser.username, role: currentUser.role })
       setUser(currentUser)
       setIsAuthenticated(true)
+    } else {
+      console.log("[AuthContext] No existing user session found")
     }
     setIsLoading(false)
+    console.log("[AuthContext] Authentication initialization complete")
   }, [])
 
   // Función para iniciar sesión.
   const login = (username: string, password: string): boolean => {
+    console.log("[AuthContext] Attempting login for user:", username)
     const loggedInUser = authService.login(username, password)
     if (loggedInUser) {
+      console.log("[AuthContext] Login successful:", { username: loggedInUser.username, role: loggedInUser.role })
       setUser(loggedInUser)
       setIsAuthenticated(true)
       return true
+    } else {
+      console.log("[AuthContext] Login failed for user:", username)
     }
     return false
   }
 
   // Función para cerrar sesión.
   const logout = () => {
+    console.log("[AuthContext] Logging out user:", user?.username)
     authService.logout()
     setUser(null)
     setIsAuthenticated(false)
+    console.log("[AuthContext] Logout complete")
   }
 
   // Verifica si el usuario actual tiene alguno de los roles requeridos.

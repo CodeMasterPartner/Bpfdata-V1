@@ -26,7 +26,11 @@ import {
   type SatisfactionIndex,
 } from "../../services/dataService"
 
-export default function DashboardPage() {
+interface DashboardPageProps {
+  isPublic?: boolean
+}
+
+export function DashboardPage({ isPublic = false }: DashboardPageProps) {
   const [participationOverview, setParticipationOverview] = useState<DashboardParticipationOverview | null>(null)
   const [indicatorResults, setIndicatorResults] = useState<IndicatorResult[]>([])
   const [satisfactionIndex, setSatisfactionIndex] = useState<SatisfactionIndex | null>(null)
@@ -341,3 +345,6 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+export default DashboardPage
+export { DashboardPage as AnalyticsPage }

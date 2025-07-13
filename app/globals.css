@@ -47,6 +47,9 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --brand-primary: 219 39% 11%;
+    --brand-primary-dark: 219 39% 8%;
+    --brand-secondary: 219 78% 95%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -81,6 +84,9 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --brand-primary: 219 39% 80%;
+    --brand-primary-dark: 219 39% 70%;
+    --brand-secondary: 219 78% 15%;
   }
 }
 
@@ -100,5 +106,54 @@ body {
   body {
     overflow-x: hidden;
     width: 100%;
+  }
+  
+  /* Brand colors */
+  .bg-brand-primary {
+    background-color: hsl(var(--brand-primary));
+  }
+  
+  .bg-brand-primary-dark {
+    background-color: hsl(var(--brand-primary-dark));
+  }
+  
+  .bg-brand-secondary {
+    background-color: hsl(var(--brand-secondary));
+  }
+  
+  .text-brand-primary {
+    color: hsl(var(--brand-primary));
+  }
+  
+  .text-brand-primary-dark {
+    color: hsl(var(--brand-primary-dark));
+  }
+  
+  .text-brand-secondary {
+    color: hsl(var(--brand-secondary));
+  }
+  
+  .border-brand-primary {
+    border-color: hsl(var(--brand-primary));
+  }
+  
+  .hover\:bg-brand-primary-dark:hover {
+    background-color: hsl(var(--brand-primary-dark));
+  }
+  
+  .hover\:text-brand-primary:hover {
+    color: hsl(var(--brand-primary));
+  }
+  
+  .hover\:text-brand-primary-dark:hover {
+    color: hsl(var(--brand-primary-dark));
+  }
+  
+  .focus\:border-brand-primary:focus {
+    border-color: hsl(var(--brand-primary));
+  }
+  
+  .focus\:ring-brand-primary:focus {
+    --tw-ring-color: hsl(var(--brand-primary));
   }
 }

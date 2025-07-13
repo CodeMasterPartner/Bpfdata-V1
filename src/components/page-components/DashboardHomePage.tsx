@@ -71,20 +71,25 @@ const quickAccessItems: QuickAccessCard[] = [
   },
 ]
 
-export default function DashboardHomePage() {
+interface DashboardHomePageProps {
+  isPublic?: boolean
+}
+
+export function DashboardHomePage({ isPublic = false }: DashboardHomePageProps) {
   const { user } = useAuth()
   const router = useRouter()
   const [kpiData, setKpiData] = useState<KPIData | null>(null)
   const [loading, setLoading] = useState(true)
 
   const navigateToPage = (key: string) => {
+    const basePath = isPublic ? "/platform" : ""
     const routes: Record<string, string> = {
-      "participation": "/participation",
-      "analytics": "/analytics", 
-      "comparisons": "/comparisons",
-      "questions": "/questions",
-      "reports": "/reports",
-      "best-practices": "/best-practices"
+      "participation": `${basePath}/participation`,
+      "analytics": `${basePath}/analytics`, 
+      "comparisons": `${basePath}/comparisons`,
+      "questions": `${basePath}/questions`,
+      "reports": `${basePath}/reports`,
+      "best-practices": `${basePath}/best-practices`
     }
     
     const route = routes[key]
@@ -138,16 +143,27 @@ export default function DashboardHomePage() {
           </div>
           <div className="flex-1">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-              {getGreeting()}, {user?.username?.split("@")[0] || "usuario"}!
+              {isPublic ? "Bienvenido a BPFeedbackData" : `${getGreeting()}, ${user?.username?.split("@")[0] || "usuario"}!`}
             </h1>
             <p className="text-gray-600 mt-1">
-              Has accedido correctamente al panel de gestión de <strong>BPFeedbackData</strong>
+              {isPublic 
+                ? "Explora nuestra plataforma de análisis y feedback empresarial" 
+                : "Has accedido correctamente al panel de gestión de BPFeedbackData"
+              }
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-2">
-              <Badge variant="secondary" className="text-xs">
-                {getRoleDisplayName(user?.role || "")}
-              </Badge>
-              <span className="text-sm text-gray-500">Última conexión: {new Date().toLocaleDateString("es-ES")}</span>
+              {isPublic ? (
+                <Badge variant="outline" className="text-xs border-blue-500 text-blue-700">
+                  Vista Pública
+                </Badge>
+              ) : (
+                <>
+                  <Badge variant="secondary" className="text-xs">
+                    {getRoleDisplayName(user?.role || "")}
+                  </Badge>
+                  <span className="text-sm text-gray-500">Última conexión: {new Date().toLocaleDateString("es-ES")}</span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -272,7 +288,7 @@ export default function DashboardHomePage() {
 
       {/* Información adicional */}
       <div className="bg-gray-50 border rounded-lg p-4 md:p-6">
-        <h3 className="font-semibold mb-2">💡 Consejos para empezar</h3>
+        <h3 className="font-semibold mb-2">💡 {isPublic ? "Explora la plataforma" : "Consejos para empezar"}</h3>
         <ul className="text-sm text-gray-600 space-y-1">
           <li>
             • Comienza revisando la sección <strong>Participación</strong> para conocer el nivel de respuesta
@@ -284,10 +300,19 @@ export default function DashboardHomePage() {
             • Explora <strong>Comparativas</strong> para identificar tendencias entre periodos
           </li>
           <li>
-            • Descarga informes desde la sección <strong>Informes</strong> para análisis detallados
+            • {isPublic ? "Revisa" : "Descarga"} informes desde la sección <strong>Informes</strong> para análisis detallados
           </li>
         </ul>
+        {isPublic && (
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-sm text-blue-800">
+              ℹ️ Esta es una vista pública con datos de demostración. <strong>Inicia sesión</strong> para acceder a todas las funcionalidades.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+export default DashboardHomePage

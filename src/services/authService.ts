@@ -21,12 +21,18 @@ export const authService = {
    * @returns El objeto User si las credenciales son válidas, de lo contrario null.
    */
   login: (username: string, password: string): User | null => {
+    console.log("[AuthService] Login attempt for:", username)
+    console.log("[AuthService] Available users:", Object.keys(MOCK_USERS))
+    
     const userCredentials = MOCK_USERS[username]
     if (userCredentials && userCredentials.password === password) {
       const user: User = { username, role: userCredentials.role }
+      console.log("[AuthService] Login successful, storing user in localStorage:", user)
       localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user))
       return user
     }
+    
+    console.log("[AuthService] Login failed - invalid credentials")
     return null
   },
 
@@ -42,13 +48,21 @@ export const authService = {
    * @returns El objeto User si hay un usuario autenticado, de lo contrario null.
    */
   getCurrentUser: (): User | null => {
-    if (typeof window === "undefined") return null // Para SSR
+    if (typeof window === "undefined") {
+      console.log("[AuthService] SSR detected, returning null")
+      return null // Para SSR
+    }
 
+    console.log("[AuthService] Getting current user from localStorage...")
     const userJson = localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+    console.log("[AuthService] Raw localStorage data:", userJson)
+    
     try {
-      return userJson ? JSON.parse(userJson) : null
+      const user = userJson ? JSON.parse(userJson) : null
+      console.log("[AuthService] Parsed user:", user)
+      return user
     } catch (e) {
-      console.error("Error parsing user from localStorage", e)
+      console.error("[AuthService] Error parsing user from localStorage", e)
       return null
     }
   },

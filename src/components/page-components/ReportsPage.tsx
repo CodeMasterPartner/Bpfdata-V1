@@ -11,7 +11,11 @@ import { dataService, type ReportData } from "../../services/dataService"
 import { useAuth } from "../../contexts/AuthContext"
 import { cn } from "@/lib/utils" // Import cn utility
 
-export default function ReportsPage() {
+interface ReportsPageProps {
+  isPublic?: boolean
+}
+
+export function ReportsPage({ isPublic = false }: ReportsPageProps) {
   const [reports, setReports] = useState<ReportData[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(true)
@@ -238,3 +242,5 @@ export default function ReportsPage() {
     </div>
   )
 }
+
+export default ReportsPage

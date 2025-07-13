@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import { dataService, type BestPractice } from "../../services/dataService"
 
-export default function BestPracticesPage() {
+interface BestPracticesPageProps {
+  isPublic?: boolean
+}
+
+export function BestPracticesPage({ isPublic = false }: BestPracticesPageProps) {
   const [bestPractices, setBestPractices] = useState<BestPractice[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -71,3 +75,5 @@ export default function BestPracticesPage() {
     </div>
   )
 }
+
+export default BestPracticesPage

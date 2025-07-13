@@ -1,7 +1,11 @@
 // src/pages/ComparisonsPage.tsx
 // Página de ejemplo para la sección "Comparativas".
 // Aquí se permitirá comparar resultados entre periodos o áreas.
-export default function ComparisonsPage() {
+interface ComparisonsPageProps {
+  isPublic?: boolean
+}
+
+export function ComparisonsPage({ isPublic = false }: ComparisonsPageProps) {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Comparativas</h2>
@@ -11,3 +15,5 @@ export default function ComparisonsPage() {
     </div>
   )
 }
+
+export default ComparisonsPage

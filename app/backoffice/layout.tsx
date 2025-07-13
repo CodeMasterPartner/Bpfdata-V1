@@ -14,7 +14,7 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import { PanelLeft, LayoutDashboard, Users, FileText, BarChart2, Settings, LogOut } from "lucide-react"
-import { AuthProvider, useAuth } from "../../src/contexts/AuthContext"
+import { useAuth } from "../../src/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -146,10 +146,8 @@ function BackofficeLayoutContent({ children }: { children: ReactNode }) {
 
 export default function BackofficeLayout({ children }: { children: ReactNode }) {
   return (
-    <AuthProvider>
-      <BackofficeLayoutContent>
-        {children}
-      </BackofficeLayoutContent>
-    </AuthProvider>
+    <BackofficeLayoutContent>
+      {children}
+    </BackofficeLayoutContent>
   )
 }
