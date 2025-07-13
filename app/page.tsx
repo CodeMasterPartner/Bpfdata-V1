@@ -1,5 +1,12 @@
-import App from "../src/App"
+"use client"
 
-export default function Page() {
-  return <App />
+import { redirect } from "next/navigation"
+import { useEffect } from "react"
+
+export default function HomePage() {
+  useEffect(() => {
+    redirect("/login")
+  }, [])
+
+  return null
 }

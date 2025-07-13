@@ -15,11 +15,9 @@ import { PanelLeft } from "lucide-react" // Import PanelLeft icon
 
 interface DashboardLayoutProps {
   children: ReactNode
-  currentPage: string
-  setCurrentPage: (page: string) => void
 }
 
-export function DashboardLayout({ children, currentPage, setCurrentPage }: DashboardLayoutProps) {
+export function DashboardLayout({ children }: DashboardLayoutProps) {
   const { user } = useAuth()
 
   return (
@@ -34,7 +32,7 @@ export function DashboardLayout({ children, currentPage, setCurrentPage }: Dashb
             </div>
           </SidebarHeader>
           <SidebarContent>
-            <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <MainNav />
           </SidebarContent>
         </Sidebar>
         {/* Contenido principal con margen para el sidebar */}

@@ -3,11 +3,12 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { useAuth } from "../contexts/AuthContext"
+import { useRouter } from "next/navigation"
+import { useAuth } from "../../contexts/AuthContext"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { dataService, type KPIData } from "../services/dataService"
+import { dataService, type KPIData } from "../../services/dataService"
 import {
   TrendingUp,
   Users,
@@ -70,14 +71,27 @@ const quickAccessItems: QuickAccessCard[] = [
   },
 ]
 
-interface DashboardHomePageProps {
-  setCurrentPage: (page: string) => void
-}
-
-export default function DashboardHomePage({ setCurrentPage }: DashboardHomePageProps) {
+export default function DashboardHomePage() {
   const { user } = useAuth()
+  const router = useRouter()
   const [kpiData, setKpiData] = useState<KPIData | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const navigateToPage = (key: string) => {
+    const routes: Record<string, string> = {
+      "participation": "/participation",
+      "analytics": "/analytics", 
+      "comparisons": "/comparisons",
+      "questions": "/questions",
+      "reports": "/reports",
+      "best-practices": "/best-practices"
+    }
+    
+    const route = routes[key]
+    if (route) {
+      router.push(route)
+    }
+  }
 
   useEffect(() => {
     const loadData = async () => {
@@ -241,7 +255,7 @@ export default function DashboardHomePage({ setCurrentPage }: DashboardHomePageP
                 <CardContent className="pt-0">
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{item.description}</p>
                   <Button
-                    onClick={() => setCurrentPage(item.key)}
+                    onClick={() => navigateToPage(item.key)}
                     variant="outline"
                     size="sm"
                     className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"

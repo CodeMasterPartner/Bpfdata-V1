@@ -24,7 +24,7 @@ import {
   type DashboardParticipationOverview,
   type IndicatorResult,
   type SatisfactionIndex,
-} from "../services/dataService"
+} from "../../services/dataService"
 
 export default function DashboardPage() {
   const [participationOverview, setParticipationOverview] = useState<DashboardParticipationOverview | null>(null)

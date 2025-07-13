@@ -6,7 +6,7 @@ import {
   dataService,
   type OverallParticipationData,
   type DepartmentParticipationChartData,
-} from "../services/dataService"
+} from "../../services/dataService"
 import { MessageSquare, Percent, CalendarDays } from "lucide-react"
 import {
   PieChart,

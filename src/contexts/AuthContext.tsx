@@ -7,6 +7,7 @@ import { authService } from "../services/authService"
 interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
+  isLoading: boolean
   login: (username: string, password: string) => boolean
   logout: () => void
   hasPermission: (requiredRoles: Role[]) => boolean
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, hasPermission }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout, hasPermission }}>
       {children}
     </AuthContext.Provider>
   )

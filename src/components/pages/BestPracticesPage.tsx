@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
-import { dataService, type BestPractice } from "../services/dataService"
+import { dataService, type BestPractice } from "../../services/dataService"
 
 export default function BestPracticesPage() {
   const [bestPractices, setBestPractices] = useState<BestPractice[]>([])

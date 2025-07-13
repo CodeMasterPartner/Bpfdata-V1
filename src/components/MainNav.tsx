@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { useRouter, usePathname } from "next/navigation"
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -16,60 +17,62 @@ import { useAuth } from "../contexts/AuthContext"
 
 interface NavItem {
   title: string
-  key: string
+  route: string
   icon: React.ElementType
 }
 
 const navItems: NavItem[] = [
   {
     title: "Inicio",
-    key: "dashboard",
+    route: "/",
     icon: Home,
   },
   {
     title: "Participación",
-    key: "participation",
+    route: "/participation",
     icon: Users,
   },
   {
     title: "Dashboard",
-    key: "analytics",
+    route: "/analytics",
     icon: BarChart3,
   },
   {
     title: "Comparativas",
-    key: "comparisons",
+    route: "/comparisons",
     icon: GitCompare,
   },
   {
     title: "Preguntas",
-    key: "questions",
+    route: "/questions",
     icon: HelpCircle,
   },
   {
     title: "Informes",
-    key: "reports",
+    route: "/reports",
     icon: FileText,
   },
   {
     title: "Buenas prácticas",
-    key: "best-practices",
+    route: "/best-practices",
     icon: LinkIcon,
   },
 ]
 
-interface MainNavProps {
-  currentPage: string
-  setCurrentPage: (page: string) => void
-}
-
-export function MainNav({ currentPage, setCurrentPage }: MainNavProps) {
+export function MainNav() {
   const { logout, user } = useAuth()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const handleLogout = () => {
     if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
       logout()
+      router.push("/login")
     }
+  }
+
+  const handleNavigation = (route: string) => {
+    router.push(route)
   }
 
   return (
@@ -79,8 +82,8 @@ export function MainNav({ currentPage, setCurrentPage }: MainNavProps) {
         <SidebarGroupContent>
           <SidebarMenu>
             {navItems.map((item) => (
-              <SidebarMenuItem key={item.key}>
-                <SidebarMenuButton onClick={() => setCurrentPage(item.key)} isActive={currentPage === item.key}>
+              <SidebarMenuItem key={item.route}>
+                <SidebarMenuButton onClick={() => handleNavigation(item.route)} isActive={pathname === item.route}>
                   <item.icon />
                   <span>{item.title}</span>
                 </SidebarMenuButton>

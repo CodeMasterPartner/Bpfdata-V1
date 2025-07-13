@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Search, Download, FileText, FileSpreadsheet, Sparkles } from "lucide-react"
-import { dataService, type ReportData } from "../services/dataService"
-import { useAuth } from "../contexts/AuthContext"
+import { dataService, type ReportData } from "../../services/dataService"
+import { useAuth } from "../../contexts/AuthContext"
 import { cn } from "@/lib/utils" // Import cn utility
 
 export default function ReportsPage() {

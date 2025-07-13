@@ -1,7 +1,0 @@
-/* src/assets/styles/globals.css */
-/* Archivo para importar las directivas de Tailwind CSS y añadir estilos globales personalizados. */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Puedes añadir aquí cualquier estilo CSS global adicional */

@@ -14,7 +14,7 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import { PanelLeft, LayoutDashboard, Users, FileText, BarChart2, Settings, LogOut } from "lucide-react"
-import { useAuth } from "../../src/contexts/AuthContext"
+import { AuthProvider, useAuth } from "../../src/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -72,7 +72,7 @@ function BackofficeNav({ currentPage, setCurrentPage }: BackofficeNavProps) {
   )
 }
 
-export default function BackofficeLayout({ children }: { children: ReactNode }) {
+function BackofficeLayoutContent({ children }: { children: ReactNode }) {
   const { user, isAuthenticated, isLoading, hasPermission } = useAuth()
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState("dashboard") // Default backoffice page
@@ -141,5 +141,15 @@ export default function BackofficeLayout({ children }: { children: ReactNode }) 
         </SidebarInset>
       </div>
     </SidebarProvider>
+  )
+}
+
+export default function BackofficeLayout({ children }: { children: ReactNode }) {
+  return (
+    <AuthProvider>
+      <BackofficeLayoutContent>
+        {children}
+      </BackofficeLayoutContent>
+    </AuthProvider>
   )
 }
