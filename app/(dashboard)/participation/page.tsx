@@ -1,6 +1,6 @@
 "use client"
 
-import ParticipationPage from "../../../src/components/pages/ParticipationPage"
+import ParticipationPage from "../../../src/components/page-components/ParticipationPage"
 
 export default function ParticipationRoute() {
   return <ParticipationPage />

@@ -8,7 +8,7 @@ const MOCK_USERS: Record<string, { password: string; role: Role }> = {
   "hr_manager@bpdata.com": { password: "password123", role: "HR Manager" },
   "hr_analyst@bpdata.com": { password: "password123", role: "HR Analyst" },
   "viewer@bpdata.com": { password: "password123", role: "Viewer" },
-  "admin@bpdata.com": { password: "adminpassword", role: "Admin" }, // New Admin user
+  "admin": { password: "admin", role: "Admin" }, // Admin user with simple credentials
 }
 
 const LOCAL_STORAGE_USER_KEY = "bpfeedbackdata_user"
