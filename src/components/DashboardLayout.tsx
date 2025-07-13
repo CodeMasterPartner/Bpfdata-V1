@@ -18,7 +18,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
 
   return (
     <SidebarProvider>
@@ -30,6 +30,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <img src="/placeholder.svg?height=24&width=24" alt="BPFeedbackData Logo" className="h-6 w-6" />
               <span className="text-lg font-semibold">BPFeedbackData</span>
             </div>
+            {!isAuthenticated && (
+              <div className="mt-2 px-1">
+                <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                  Acceso Público
+                </span>
+              </div>
+            )}
           </SidebarHeader>
           <SidebarContent>
             <MainNav />
@@ -43,11 +50,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <PanelLeft className="h-4 w-4" />
               <span className="sr-only">Toggle Sidebar</span>
             </SidebarTrigger>
-            <h1 className="text-xl font-semibold">Panel de Gestión</h1>
+            <h1 className="text-xl font-semibold">{isAuthenticated ? "Panel de Gestión" : "BPFeedbackData - Explorar"}</h1>
             <div className="ml-auto flex items-center gap-2">
-              {user && (
+              {isAuthenticated && user ? (
                 <span className="text-sm text-muted-foreground">
                   Bienvenido, {user.username} ({user.role})
+                </span>
+              ) : (
+                <span className="text-sm text-muted-foreground">
+                  Acceso público • <a href="/login" className="text-brand-primary hover:text-brand-primary-dark cursor-pointer font-medium">Iniciar sesión</a> para funcionalidad completa
                 </span>
               )}
             </div>

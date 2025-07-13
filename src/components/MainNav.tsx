@@ -12,7 +12,7 @@ import {
   SidebarSeparator,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { Home, HelpCircle, FileText, LinkIcon, LogOut, Users, BarChart3, GitCompare } from "lucide-react"
+import { Home, HelpCircle, FileText, LinkIcon, LogOut, LogIn, Users, BarChart3, GitCompare } from "lucide-react"
 import { useAuth } from "../contexts/AuthContext"
 
 interface NavItem {
@@ -60,7 +60,7 @@ const navItems: NavItem[] = [
 ]
 
 export function MainNav() {
-  const { logout, user } = useAuth()
+  const { logout, user, isAuthenticated } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -97,18 +97,37 @@ export function MainNav() {
 
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <div className="px-2 py-1 text-xs text-muted-foreground">
-              <div className="font-medium">{user?.username?.split("@")[0]}</div>
-              <div className="text-xs opacity-70">{user?.role}</div>
-            </div>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={handleLogout} className="text-red-600 hover:text-red-700 hover:bg-red-50">
-              <LogOut />
-              <span>Cerrar sesión</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {isAuthenticated && user ? (
+            <>
+              <SidebarMenuItem>
+                <div className="px-2 py-1 text-xs text-muted-foreground">
+                  <div className="font-medium">{user.username?.split("@")[0]}</div>
+                  <div className="text-xs opacity-70">{user.role}</div>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleLogout} className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                  <LogOut />
+                  <span>Cerrar sesión</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </>
+          ) : (
+            <>
+              <SidebarMenuItem>
+                <div className="px-2 py-1 text-xs text-muted-foreground">
+                  <div className="font-medium">Acceso público</div>
+                  <div className="text-xs opacity-70">Funcionalidad limitada</div>
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => router.push("/login")} className="text-brand-primary hover:text-brand-primary-dark hover:bg-blue-50">
+                  <LogIn />
+                  <span>Iniciar sesión</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </>
+          )}
         </SidebarMenu>
       </SidebarFooter>
     </>

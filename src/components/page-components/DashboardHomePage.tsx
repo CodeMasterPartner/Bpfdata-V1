@@ -76,12 +76,16 @@ interface DashboardHomePageProps {
 }
 
 export function DashboardHomePage({ isPublic = false }: DashboardHomePageProps) {
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   const router = useRouter()
   const [kpiData, setKpiData] = useState<KPIData | null>(null)
   const [loading, setLoading] = useState(true)
+  
+  // Auto-detect public mode if not explicitly set
+  const actuallyPublic = isPublic || !isAuthenticated
 
   const navigateToPage = (key: string) => {
+    // Use /platform routes only if explicitly set as public prop
     const basePath = isPublic ? "/platform" : ""
     const routes: Record<string, string> = {
       "participation": `${basePath}/participation`,
@@ -143,16 +147,16 @@ export function DashboardHomePage({ isPublic = false }: DashboardHomePageProps) 
           </div>
           <div className="flex-1">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-              {isPublic ? "Bienvenido a BPFeedbackData" : `${getGreeting()}, ${user?.username?.split("@")[0] || "usuario"}!`}
+              {actuallyPublic ? "Bienvenido a BPFeedbackData" : `${getGreeting()}, ${user?.username?.split("@")[0] || "usuario"}!`}
             </h1>
             <p className="text-gray-600 mt-1">
-              {isPublic 
+              {actuallyPublic 
                 ? "Explora nuestra plataforma de análisis y feedback empresarial" 
                 : "Has accedido correctamente al panel de gestión de BPFeedbackData"
               }
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-2">
-              {isPublic ? (
+              {actuallyPublic ? (
                 <Badge variant="outline" className="text-xs border-blue-500 text-blue-700">
                   Vista Pública
                 </Badge>
@@ -288,7 +292,7 @@ export function DashboardHomePage({ isPublic = false }: DashboardHomePageProps) 
 
       {/* Información adicional */}
       <div className="bg-gray-50 border rounded-lg p-4 md:p-6">
-        <h3 className="font-semibold mb-2">💡 {isPublic ? "Explora la plataforma" : "Consejos para empezar"}</h3>
+        <h3 className="font-semibold mb-2">💡 {actuallyPublic ? "Explora la plataforma" : "Consejos para empezar"}</h3>
         <ul className="text-sm text-gray-600 space-y-1">
           <li>
             • Comienza revisando la sección <strong>Participación</strong> para conocer el nivel de respuesta
@@ -300,13 +304,13 @@ export function DashboardHomePage({ isPublic = false }: DashboardHomePageProps) 
             • Explora <strong>Comparativas</strong> para identificar tendencias entre periodos
           </li>
           <li>
-            • {isPublic ? "Revisa" : "Descarga"} informes desde la sección <strong>Informes</strong> para análisis detallados
+            • {actuallyPublic ? "Revisa" : "Descarga"} informes desde la sección <strong>Informes</strong> para análisis detallados
           </li>
         </ul>
-        {isPublic && (
+        {actuallyPublic && (
           <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
             <p className="text-sm text-blue-800">
-              ℹ️ Esta es una vista pública con datos de demostración. <strong>Inicia sesión</strong> para acceder a todas las funcionalidades.
+              ℹ️ Esta es una vista pública con datos de demostración. <a href="/login" className="font-medium underline hover:text-blue-900">Inicia sesión</a> para acceder a todas las funcionalidades.
             </p>
           </div>
         )}
