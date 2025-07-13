@@ -24,7 +24,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         {/* Sidebar fijo a la izquierda */}
-        <Sidebar className="fixed inset-y-0 left-0 z-50 w-72 bg-background border-r hidden md:block">
+        <Sidebar className="fixed inset-y-0 left-0 z-50 w-64 lg:w-72 bg-background border-r hidden md:block">
           <SidebarHeader className="p-4 border-b">
             <div className="flex items-center gap-2">
               <img src="/placeholder.svg?height=24&width=24" alt="BPFeedbackData Logo" className="h-6 w-6" />
@@ -43,27 +43,27 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </SidebarContent>
         </Sidebar>
         {/* Contenido principal con margen para el sidebar */}
-        <SidebarInset className="flex flex-col flex-1 md:ml-72">
-          <header className="flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+        <SidebarInset className="flex flex-col flex-1 md:ml-64 lg:ml-72">
+          <header className="flex h-14 sm:h-16 items-center gap-2 sm:gap-4 border-b bg-background px-3 sm:px-4 md:px-6">
             {/* Botón para mostrar/ocultar sidebar en móvil */}
             <SidebarTrigger className="h-7 w-7 md:hidden">
               <PanelLeft className="h-4 w-4" />
               <span className="sr-only">Toggle Sidebar</span>
             </SidebarTrigger>
-            <h1 className="text-xl font-semibold">{isAuthenticated ? "Panel de Gestión" : "BPFeedbackData - Explorar"}</h1>
-            <div className="ml-auto flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-semibold truncate">{isAuthenticated ? "Panel de Gestión" : "BPFeedbackData - Explorar"}</h1>
+            <div className="ml-auto hidden sm:flex items-center gap-2">
               {isAuthenticated && user ? (
-                <span className="text-sm text-muted-foreground">
+                <span className="text-xs sm:text-sm text-muted-foreground">
                   Bienvenido, {user.username} ({user.role})
                 </span>
               ) : (
-                <span className="text-sm text-muted-foreground">
+                <span className="text-xs sm:text-sm text-muted-foreground">
                   Acceso público • <a href="/login" className="text-brand-primary hover:text-brand-primary-dark cursor-pointer font-medium">Iniciar sesión</a> para funcionalidad completa
                 </span>
               )}
             </div>
           </header>
-          <main className="flex-1 p-4 md:p-6">{children}</main>
+          <main className="flex-1 p-3 sm:p-4 md:p-6 lg:p-8">{children}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>
